@@ -25,7 +25,6 @@ function App() {
                     >Agregar al Carrito</button>
                 </div>
             </div>
-
             <div class="col-md-6 col-lg-4 my-4 row align-items-center">
                 <div class="col-4">
                     <img class="img-fluid" src="./public/img/guitarra_02.jpg" alt="imagen guitarra"/>
