@@ -9,7 +9,7 @@ function App() {
   const initialCart = () =>{
 
     const localStorageCart = localStorage.getItem('cart')
-    return localStorage ? JSON.parse(localStorageCart) : []
+    return localStorageCart ? JSON.parse(localStorageCart) : []
 
   }
 
