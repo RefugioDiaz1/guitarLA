@@ -9,15 +9,55 @@ function App() {
   const [data, setData ] = useState(db)
   const [cart, setCart]= useState([]);
 
-  function addToCart(){
+  function addToCart(item){ 
 
-    console.log('agregando...')
+    //Esta logica es cuando comparo si en mi state 
+    //ya tengo ese elemento, para no repetirse
+    //se usa findIndex porque no muta el useState
+    const intemExists = cart.findIndex(guitar=> guitar.id === item.id)
+    //console.log(intemExists)
+    if (intemExists >= 0 ) {
+
+      //Aqui sirve pero estoy mutando al state
+      //cart[intemExists].quatity++
+
+      const updateCart= [...cart]
+
+      updateCart[intemExists].quatity++
+      setCart(updateCart)
+
+      //console.log("Ya existe...")
+    }else{
+
+      item.quatity = 1
+      console.log("No existe... Agregando...")
+      //setCart(prevCart=>[...prevCart,item])
+      //Una forma mas rapida menos codigo, asi, porque cart es lo que
+      //esta arriba mis elementos guardados
+      setCart([...cart,item])
+    }
+  }
+
+  function removeFromCart(id){
+
+      setCart(prevCart => prevCart.filter(guitar=>guitar.id !== id))
+
+    }
+
+  function increaseQuantity(id)
+  {
+    console.log('Incrementando...',id)
+
   }
 
   return (
     <>
      
-     <Header/>
+     <Header 
+     cart={cart}
+     removeFromCart ={removeFromCart}
+     increaseQuantity = {increaseQuantity}
+     />
     
     <main className="container-xl mt-5">
         <h2  className="text-center">Nuestra Colección</h2>
