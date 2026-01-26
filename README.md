@@ -22,3 +22,7 @@ If you are developing a production application, we recommend using TypeScript wi
 State Derivado --> es asi porque va depende del arreglo
 
 useMemo es un hook que hacer de que no renderice la pagina hasta que haya algun cambio notorio
+
+LocalStorage
+
+sTATE DE REACT ES ASINCRONO, es que otras funcionas se mandan a llamar aun cuando el state no ha sido modificado

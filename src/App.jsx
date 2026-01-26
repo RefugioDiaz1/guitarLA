@@ -6,8 +6,24 @@ import {db} from './data/db'
 
 function App() {
 
-  const [data, setData ] = useState(db)
-  const [cart, setCart]= useState([]);
+  const initialCart = () =>{
+
+    const localStorageCart = localStorage.getItem('cart')
+    return localStorage ? JSON.parse(localStorageCart) : []
+
+  }
+
+  const [data ] = useState(db)
+  const [cart, setCart]= useState(initialCart);
+
+  const MAX_ITEMS = 5
+  const MIN_ITEMS = 1
+
+  useEffect(()=>{
+
+     localStorage.setItem('cart',JSON.stringify(cart))
+ 
+  },[cart])
 
   function addToCart(item){ 
 
@@ -18,6 +34,7 @@ function App() {
     //console.log(intemExists)
     if (intemExists >= 0 ) {
 
+      if(cart[intemExists].quatity >= MAX_ITEMS) return
       //Aqui sirve pero estoy mutando al state
       //cart[intemExists].quatity++
 
@@ -36,19 +53,50 @@ function App() {
       //esta arriba mis elementos guardados
       setCart([...cart,item])
     }
+
+    
   }
 
-  function removeFromCart(id){
+   function removeFromCart(id){
 
       setCart(prevCart => prevCart.filter(guitar=>guitar.id !== id))
 
     }
 
-  function increaseQuantity(id)
+   function increaseQuantity(id)
   {
-    console.log('Incrementando...',id)
-
+    setCart(prevCart => prevCart.map(item=>
+      item.id === id && item.quatity <MAX_ITEMS ? {...item, quatity:item.quatity+1} : item      
+    )) 
   }
+
+  function decreaseQuantity(id)
+  {
+    setCart(prevCart => prevCart.map(item=>
+      item.id === id && item.quatity > MIN_ITEMS ? {...item, quatity:item.quatity-1} : item      
+    )) 
+  }
+
+  function clearCart(){
+
+    setCart([])
+  }
+
+
+  // function increaseQuantity(id)
+  // {
+  //   const updateCart = cart.map(item=>{
+  //     if (item.id === id) {
+  //       return{
+          
+  //         ...item,
+  //         quatity: item.quatity+1
+  //       }
+  //     }
+  //     return item
+  //   })
+  //   setCart(updateCart)
+  // }
 
   return (
     <>
@@ -57,6 +105,8 @@ function App() {
      cart={cart}
      removeFromCart ={removeFromCart}
      increaseQuantity = {increaseQuantity}
+     decreaseQuantity = {decreaseQuantity}
+     clearCart= {clearCart}
      />
     
     <main className="container-xl mt-5">

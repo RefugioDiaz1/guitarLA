@@ -2,7 +2,7 @@
 
 export default function Guitar({guitar, addToCart}){
 
-const {id, name, image, description, price} = guitar
+const { name, image, description, price} = guitar
 // const handleClick = (guitar) =>{
 
 //     setCart([...cart,guitar])
